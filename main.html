@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Investment Calculator</title>
+  <!-- Add Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      padding: 20px;
+    }
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Investment Returns Calculator</h1>
+    <form id="investment-form">
+      <div class="form-group">
+        <label for="monthlyIngresses">Monthly Ingresses (in euros):</label>
+        <input type="number" class="form-control" id="monthlyIngresses" required>
+      </div>
+      <div class="form-group">
+        <label for="annualReturnRate">Annual Return Rate (%):</label>
+        <input type="number" class="form-control" id="annualReturnRate" required>
+      </div>
+      <div class="form-group">
+        <label for="months">Number of Months:</label>
+        <input type="number" class="form-control" id="months" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Calculate</button>
+    </form>
+    <div id="result" class="mt-3"></div>
+  </div>
+
+  <script>
+    function calculateInvestmentReturns(monthlyIngresses, annualReturnRate, months) {
+        const monthlyRate = ((annualReturnRate / 100) / 12) + 1;
+
+        let totalAmount = 0;
+        let totalBenefits = 0;
+
+        for (let i = 1; i <= months; i++) {
+            totalAmount += monthlyIngresses; // Add monthly ingresses
+            totalAmount *= monthlyRate; // Apply monthly interest rate
+            totalBenefits = (totalAmount - (monthlyIngresses * i)); // Calculate total benefits
+        }
+
+        return {
+            totalAmount: totalAmount.toFixed(2),
+            totalBenefits: totalBenefits.toFixed(2)
+        };
+    }
+
+    document.getElementById("investment-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const monthlyIngresses = parseFloat(document.getElementById("monthlyIngresses").value);
+      const annualReturnRate = parseFloat(document.getElementById("annualReturnRate").value);
+      const months = parseInt(document.getElementById("months").value);
+      
+      const result = calculateInvestmentReturns(monthlyIngresses, annualReturnRate, months);
+
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = `
+        <h3>Investment Results</h3>
+        <p>Total Amount: €${result.totalAmount}</p>
+        <p>Total Benefits: €${result.totalBenefits}</p>
+      `;
+    });
+  </script>
+</body>
+</html>
