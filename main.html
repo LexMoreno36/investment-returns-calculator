@@ -78,6 +78,25 @@
           yearsInput.value = storedYears;
         }
       }
+
+      function calculateInvestmentReturns(monthlyIngresses, annualReturnRate, years) {
+        const months = years * 12;
+        const monthlyRate = ((annualReturnRate / 100) / 12) + 1;
+
+        let totalAmount = 0;
+        let totalBenefits = 0;
+
+        for (let i = 1; i <= months; i++) {
+            totalAmount += monthlyIngresses; // Add monthly ingresses
+            totalAmount *= monthlyRate; // Apply monthly interest rate
+            totalBenefits = (totalAmount - (monthlyIngresses * i)); // Calculate total benefits
+        }
+
+        return {
+            totalAmount: totalAmount.toFixed(2),
+            totalBenefits: totalBenefits.toFixed(2)
+        };
+    }
   
       // Function to save user inputs to local storage
       function saveUserInputs() {
