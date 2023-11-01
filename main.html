@@ -22,16 +22,16 @@
     <h1>Investment Returns Calculator</h1>
     <form id="investment-form">
       <div class="form-group">
-        <label for="monthlyIngresses">Monthly Ingresses (in euros):</label>
-        <input type="number" class="form-control" id="monthlyIngresses" required>
+        <label for="monthlyIngresses">Monthly Ingresses (€):</label>
+        <input type="number" class="form-control" id="monthlyIngresses" min="0" step="100" required>
       </div>
       <div class="form-group">
         <label for="annualReturnRate">Annual Return Rate (%):</label>
-        <input type a="number" class="form-control" id="annualReturnRate" required>
+        <input type="number" class="form-control" id="annualReturnRate" required>
       </div>
       <div class="form-group">
-        <label for="months">Number of Months:</label>
-        <input type="number" class="form-control" id="months" required>
+        <label for="years">Number of Years:</label>
+        <input type="number" class="form-control" id="years" min="1" required>
       </div>
       <button type="submit" class="btn btn-primary">Calculate</button>
     </form>
@@ -58,7 +58,8 @@
   </div>
 
   <script>
-    function calculateInvestmentReturns(monthlyIngresses, annualReturnRate, months) {
+    function calculateInvestmentReturns(monthlyIngresses, annualReturnRate, years) {
+        const months = years * 12;
         const monthlyRate = ((annualReturnRate / 100) / 12) + 1;
 
         let totalAmount = 0;
@@ -80,12 +81,12 @@
       e.preventDefault();
       const monthlyIngresses = parseFloat(document.getElementById("monthlyIngresses").value);
       const annualReturnRate = parseFloat(document.getElementById("annualReturnRate").value);
-      const months = parseInt(document.getElementById("months").value);
+      const years = parseInt(document.getElementById("years").value);
       
-      const result = calculateInvestmentReturns(monthlyIngresses, annualReturnRate, months);
+      const result = calculateInvestmentReturns(monthlyIngresses, annualReturnRate, years);
 
       // Calculate the total money without investment
-      const totalWithoutInvestment = (monthlyIngresses * months).toFixed(2);
+      const totalWithoutInvestment = (monthlyIngresses * years * 12).toFixed(2);
 
       // Update the result content in the modal
       const resultModalBody = document.getElementById("resultModalBody");
