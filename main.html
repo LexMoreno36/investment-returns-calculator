@@ -37,9 +37,9 @@
     </form>
   </div>
 
-  <!-- Bootstrap Modal -->
-  <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="resultModalLabel">Investment Results</h5>
@@ -55,7 +55,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>  
 
   <script>
     function calculateInvestmentReturns(monthlyIngresses, annualReturnRate, years) {
@@ -78,28 +78,30 @@
     }
 
     document.getElementById("investment-form").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const monthlyIngresses = parseFloat(document.getElementById("monthlyIngresses").value);
-      const annualReturnRate = parseFloat(document.getElementById("annualReturnRate").value);
-      const years = parseInt(document.getElementById("years").value);
-      
-      const result = calculateInvestmentReturns(monthlyIngresses, annualReturnRate, years);
+        e.preventDefault();
+        const monthlyIngresses = parseFloat(document.getElementById("monthlyIngresses").value);
+        const annualReturnRate = parseFloat(document.getElementById("annualReturnRate").value);
+        const years = parseInt(document.getElementById("years").value);
+        
+        const result = calculateInvestmentReturns(monthlyIngresses, annualReturnRate, years);
 
-      // Calculate the total money without investment
-      const totalWithoutInvestment = (monthlyIngresses * years * 12).toFixed(2);
+        // Calculate the total money without investment
+        const totalWithoutInvestment = (monthlyIngresses * years * 12).toFixed(2);
 
-      // Update the result content in the modal
-      const resultModalBody = document.getElementById("resultModalBody");
-      resultModalBody.innerHTML = `
-        <h3>Investment Results</h3>
-        <p>Total Amount with Investment: €${result.totalAmount}</p>
-        <p>Total Benefits with Investment: €${result.totalBenefits}</p>
-        <p>Total Amount without Investment: €${totalWithoutInvestment}</p>
-      `;
+        // Update the result content in the modal with improved styling
+        const resultModalBody = document.getElementById("resultModalBody");
+        resultModalBody.innerHTML = `
+            <div class="result-content">
+            <p class="result-item">Total Amount with Investment: €${result.totalAmount}</p>
+            <p class="result-item">Total Benefits with Investment: €${result.totalBenefits}</p>
+            <p class="result-item">Total Amount without Investment: €${totalWithoutInvestment}</p>
+            </div>
+        `;
 
-      // Show the modal
-      $('#resultModal').modal('show');
+        // Show the modal
+        $('#resultModal').modal('show');
     });
+
   </script>
 
   <!-- Include Bootstrap JS at the end -->
