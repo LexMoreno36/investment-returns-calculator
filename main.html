@@ -27,7 +27,7 @@
       </div>
       <div class="form-group">
         <label for="annualReturnRate">Annual Return Rate (%):</label>
-        <input type="number" class="form-control" id="annualReturnRate" required>
+        <input type a="number" class="form-control" id="annualReturnRate" required>
       </div>
       <div class="form-group">
         <label for="months">Number of Months:</label>
@@ -35,7 +35,26 @@
       </div>
       <button type="submit" class="btn btn-primary">Calculate</button>
     </form>
-    <div id="result" class="mt-3"></div>
+  </div>
+
+  <!-- Bootstrap Modal -->
+  <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="resultModalLabel">Investment Results</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="resultModalBody">
+          <!-- Result content will be displayed here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -65,13 +84,26 @@
       
       const result = calculateInvestmentReturns(monthlyIngresses, annualReturnRate, months);
 
-      const resultDiv = document.getElementById("result");
-      resultDiv.innerHTML = `
+      // Calculate the total money without investment
+      const totalWithoutInvestment = (monthlyIngresses * months).toFixed(2);
+
+      // Update the result content in the modal
+      const resultModalBody = document.getElementById("resultModalBody");
+      resultModalBody.innerHTML = `
         <h3>Investment Results</h3>
-        <p>Total Amount: €${result.totalAmount}</p>
-        <p>Total Benefits: €${result.totalBenefits}</p>
+        <p>Total Amount with Investment: €${result.totalAmount}</p>
+        <p>Total Benefits with Investment: €${result.totalBenefits}</p>
+        <p>Total Amount without Investment: €${totalWithoutInvestment}</p>
       `;
+
+      // Show the modal
+      $('#resultModal').modal('show');
     });
   </script>
+
+  <!-- Include Bootstrap JS at the end -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
