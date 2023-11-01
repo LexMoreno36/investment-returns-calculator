@@ -37,8 +37,8 @@
     </form>
   </div>
 
-<!-- Bootstrap Modal -->
-<div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
+  <!-- Bootstrap Modal -->
+  <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -55,53 +55,72 @@
         </div>
       </div>
     </div>
-  </div>  
+  </div>
 
   <script>
-    function calculateInvestmentReturns(monthlyIngresses, annualReturnRate, years) {
-        const months = years * 12;
-        const monthlyRate = ((annualReturnRate / 100) / 12) + 1;
-
-        let totalAmount = 0;
-        let totalBenefits = 0;
-
-        for (let i = 1; i <= months; i++) {
-            totalAmount += monthlyIngresses; // Add monthly ingresses
-            totalAmount *= monthlyRate; // Apply monthly interest rate
-            totalBenefits = (totalAmount - (monthlyIngresses * i)); // Calculate total benefits
-        }
-
-        return {
-            totalAmount: totalAmount.toFixed(2),
-            totalBenefits: totalBenefits.toFixed(2)
-        };
+    // Function to load user inputs from local storage
+    function loadUserInputs() {
+      const monthlyIngressesInput = document.getElementById("monthlyIngresses");
+      const annualReturnRateInput = document.getElementById("annualReturnRate");
+      const yearsInput = document.getElementById("years");
+      
+      const storedMonthlyIngresses = localStorage.getItem("monthlyIngresses");
+      const storedAnnualReturnRate = localStorage.getItem("annualReturnRate");
+      const storedYears = localStorage.getItem("years");
+      
+      if (storedMonthlyIngresses) {
+        monthlyIngressesInput.value = storedMonthlyIngresses;
+      }
+      if (storedAnnualReturnRate) {
+        annualReturnRateInput.value = storedAnnualReturnRate;
+      }
+      if (storedYears) {
+        yearsInput.value = storedYears;
+      }
     }
 
+    // Function to save user inputs to local storage
+    function saveUserInputs() {
+      const monthlyIngressesInput = document.getElementById("monthlyIngresses");
+      const annualReturnRateInput = document.getElementById("annualReturnRate");
+      const yearsInput = document.getElementById("years");
+      
+      localStorage.setItem("monthlyIngresses", monthlyIngressesInput.value);
+      localStorage.setItem("annualReturnRate", annualReturnRateInput.value);
+      localStorage.setItem("years", yearsInput.value);
+    }
+
+    // Load user inputs on page load
+    loadUserInputs();
+
     document.getElementById("investment-form").addEventListener("submit", function (e) {
-        e.preventDefault();
-        const monthlyIngresses = parseFloat(document.getElementById("monthlyIngresses").value);
-        const annualReturnRate = parseFloat(document.getElementById("annualReturnRate").value);
-        const years = parseInt(document.getElementById("years").value);
-        
-        const result = calculateInvestmentReturns(monthlyIngresses, annualReturnRate, years);
+      e.preventDefault();
+      const monthlyIngresses = parseFloat(document.getElementById("monthlyIngresses").value);
+      const annualReturnRate = parseFloat(document.getElementById("annualReturnRate").value);
+      const years = parseInt(document.getElementById("years").value);
+      
+      const result = calculateInvestmentReturns(monthlyIngresses, annualReturnRate, years);
 
-        // Calculate the total money without investment
-        const totalWithoutInvestment = (monthlyIngresses * years * 12).toFixed(2);
+      // Calculate the total money without investment
+      const totalWithoutInvestment = (monthlyIngresses * years * 12).toFixed(2);
 
-        // Update the result content in the modal with improved styling
-        const resultModalBody = document.getElementById("resultModalBody");
-        resultModalBody.innerHTML = `
-            <div class="result-content">
-            <p class="result-item">Total Amount with Investment: €${result.totalAmount}</p>
-            <p class="result-item">Total Benefits with Investment: €${result.totalBenefits}</p>
-            <p class="result-item">Total Amount without Investment: €${totalWithoutInvestment}</p>
-            </div>
-        `;
+      // Update the result content in the modal with improved styling
+      const resultModalBody = document.getElementById("resultModalBody");
+      resultModalBody.innerHTML = `
+        <div class="result-content">
+          <h3>Investment Results</h3>
+          <p class="result-item">Total Amount with Investment: €${result.totalAmount}</p>
+          <p class="result-item">Total Benefits with Investment: €${result.totalBenefits}</p>
+          <p class="result-item">Total Amount without Investment: €${totalWithoutInvestment}</p>
+        </div>
+      `;
 
-        // Show the modal
-        $('#resultModal').modal('show');
+      // Show the modal
+      $('#resultModal').modal('show');
+
+      // Save user inputs to local storage
+      saveUserInputs();
     });
-
   </script>
 
   <!-- Include Bootstrap JS at the end -->
