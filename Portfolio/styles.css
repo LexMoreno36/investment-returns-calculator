@@ -1,10 +1,11 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+    margin: 0;
 }
 
-#app {
-    max-width: 800px;
+.container {
+    max-width: 1200px;
     margin: 20px auto;
     background-color: #fff;
     padding: 20px;
@@ -12,18 +13,52 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#investmentList {
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.main-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form-section {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.list-section {
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.btn {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.list {
     list-style-type: none;
     padding: 0;
 }
 
-#investmentList li {
+.list li {
     background-color: #eaeaea;
     margin: 5px 0;
     padding: 10px;
     border-radius: 4px;
-}
-
-#addInvestmentForm {
-    margin-top: 20px;
 }
