@@ -21,6 +21,18 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="category">Investment Category:</label>
+                        <select id="category" class="input-field" required>
+                            <option value="" disabled selected>Select a category</option>
+                            <option value="crypto">Crypto</option>
+                            <option value="ETF">ETF</option>
+                            <option value="stocks">Stocks</option>
+                            <option value="bonds">Bonds</option>
+                            <option value="realEstate">Real Estate</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label for="amount">Investment Amount ($):</label>
                         <input type="number" id="amount" class="input-field" required>
                     </div>

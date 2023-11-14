@@ -11,21 +11,23 @@ document.addEventListener('DOMContentLoaded', function () {
         const name = document.getElementById('name').value;
         const amount = document.getElementById('amount').value;
         const purchaseDate = document.getElementById('purchaseDate').value;
-
-        if (name && amount && purchaseDate) {
+        const category = document.getElementById('category').value;
+    
+        if (name && amount && purchaseDate && category) {
             const newInvestment = {
                 Name: name,
                 Amount: amount,
                 PurchaseDate: purchaseDate,
+                Category: category,
             };
-
+    
             // Save the new investment to local storage
             existingInvestments.push(newInvestment);
             localStorage.setItem('investments', JSON.stringify(existingInvestments));
-
+    
             // Clear the form fields
             addInvestmentForm.reset();
-
+    
             // Update the displayed list of investments
             renderInvestments(existingInvestments);
         }
